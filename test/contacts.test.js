@@ -40,7 +40,7 @@ describe('GET /contacts', function() {
       .get('/v1/contacts')
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, (err, res) => {
+      .expect(200, function(err, res) {
         if (err) { return done(err); }
         expect(res.body.status).to.equal("success");
         done();
@@ -72,7 +72,7 @@ describe('GET /contacts/:contactID', function () {
           .get(`/v1/contacts/1`)
           .set('Accept', 'application/json')
           .expect('Content-Type', /json/)
-          .expect(404, (err, res) => {
+          .expect(404, function(err, res) {
             if (err) { return done(err); }
               expect(res.body.message).to.equal("Contact with id  1 not found");
               // done
@@ -89,7 +89,7 @@ describe('POST /v1/contacts', function() {
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
-      .end( (err, res) => {
+      .end( function(err, res) {
         if (err) { return done(err); }
         // Done
         done();
@@ -105,7 +105,7 @@ describe('POST /v1/contacts', function() {
       .send(contact)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(400, (err, res) => {
+      .expect(400, function(err, res) {
         if (err) { return done(err); }
         expect(res.body.message).to.equal("Contact phone number or name can not be empty");
 

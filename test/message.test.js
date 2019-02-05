@@ -32,12 +32,6 @@ beforeEach(function(done) {
   });
 });
 
-// afterEach(function(done) {
-//   mongoose.disconnect();
-//   done();
-// });
-
-
 
 describe('Message routes', function() {
 
@@ -46,7 +40,7 @@ describe('Message routes', function() {
       .get(`/v1/contacts/${contact._id}/messages/received`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, (err, res) => {
+      .expect(200, function(err, res)  {
         if (err) { return done(err); }
         expect(res.body).to.be.an("object");
         done();
@@ -58,7 +52,7 @@ describe('Message routes', function() {
       .get(`/v1/contacts/${contact._id}/messages/sent`)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(200, (err, res) => {
+      .expect(200, function(err, res) {
         if (err) { return done(err); }
         expect(res.body).to.be.an("object");
         done();
@@ -72,7 +66,7 @@ describe('Message routes', function() {
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
       .expect(201)
-      .end( (err, res) => {
+      .end( function(err, res) {
         if (err) { return done(err); }
         // Done
         done();

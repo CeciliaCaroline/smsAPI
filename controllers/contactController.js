@@ -42,6 +42,7 @@ exports.findAll = (req, res) => {
       res.status(200).send({contacts, status: "success"});
     })
     .catch(error => {
+      res.status = 500;
       res.status(500).send({
         message: error.message || "An error occurred while retrieving contacts."
       });
@@ -72,10 +73,6 @@ exports.findOne = (req, res) => {
 
 };
 
-// Update a contact identified by the contactId in the request
-exports.update = (req, res) => {
-
-};
 
 // Delete a contact with the specified contactId in the request
 exports.delete = (req, res) => {
