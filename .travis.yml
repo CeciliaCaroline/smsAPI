@@ -8,4 +8,4 @@ services: mongodb
 script:
   - npm test
 after_script: 
-  # - npm run coveralls
+  - npm install coveralls && cat ./coverage/lcov.info | coveralls
