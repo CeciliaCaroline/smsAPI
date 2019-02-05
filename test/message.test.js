@@ -4,8 +4,8 @@ const request = require('supertest');
 const app = require('../index'); 
 const expect = require('chai').expect;
 const mongoose = require('mongoose');
-const Contact = require("../models").Contact;
-const Message = require("../messageModel").Message
+const Contact = require("../models/contact").Contact;
+const Message = require("../models/message").Message
 let contact;
 let message;
 

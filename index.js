@@ -4,74 +4,35 @@ const express = require("express");
 const jsonParser = require("body-parser").json;
 const routes = require("./router");
 const logger = require("morgan");
-const mongoose = require("mongoose");
-const dbConfig = require("./database.config");
-
+const cors = require('cors');
+const {handle404Errors, handleErrors} = require("./helpers/error_handlers");
+const {databaseSetUp} = require("./helpers/database_setup");
 const app = express();
+const mongoose = require("mongoose");
+// require('dotenv').config()
 
 mongoose.Promise = global.Promise;
-
+let port =  8081;
 app.use(logger("dev"));
 app.use(jsonParser());
+app.use(cors())
 
-// module.exports.connectDatabase = () => {
-    let DATABASE_URL = dbConfig.url;
-
-  if (process.env.NODE_ENV === "testing") {
-    DATABASE_URL = dbConfig.testUrl;
+databaseSetUp();
+if (process.env.NODE_ENV === 'testing') {
+    port = process.env.TEST_PORT
   }
-
-  // Connecting to the database
-  mongoose
-    .connect(
-      DATABASE_URL,
-      {
-        useNewUrlParser: true
-      }
-    )
-    .then(() => {
-      console.log("Successfully connected to the database");
-    })
-    .catch(err => {
-      console.log("Could not connect to the database. Exiting now...", err);
-      process.exit();
-    });
-// };
-
-// mongoose.connect(dbConfig.url, { useNewUrlParser: true });
-
-// const db = mongoose.connection;
-// db.on("error", err => {
-//   console.log("Connection error", err);
-// });
-
-// db.once("open", () => {
-//   console.log("Connection successful");
-// });
 
 app.use("/v1", routes);
 
 // catch 404 error and forward to error handler
-app.use((req, res, next) => {
-  const error = new Error("Not Found");
-  error.status = 404;
-  next(error);
-});
+app.use(handle404Errors());
 
 // Error Handler
-app.use((err, req, res, next) => {
-  res.status(err.status || 500);
-  res.json({
-    error: {
-      message: err.message
-    }
-  });
-});
+app.use(handleErrors());
 
-const port = 8081;
+
 app.listen(port, () => {
   console.log(`App is listening on port ${port}`);
 });
-
 
 module.exports = app;
