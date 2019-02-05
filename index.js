@@ -9,7 +9,7 @@ const {handle404Errors, handleErrors} = require("./helpers/error_handlers");
 const {databaseSetUp} = require("./helpers/database_setup");
 const app = express();
 const mongoose = require("mongoose");
-// require('dotenv').config()
+require('dotenv').config()
 
 mongoose.Promise = global.Promise;
 let port =  8081;

@@ -66,6 +66,7 @@ exports.findOne = (req, res) => {
           message: `Contact with id  ${req.params.contactID} not found`
         });
       }
+      console.log(res, 'this is the response')
       return res.status(500).send({
         message: "Error retrieving contact with id " + req.params.contactID
     });

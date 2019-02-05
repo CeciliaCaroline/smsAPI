@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development && nodemon",
-    "test": " NODE_ENV=testing mocha --exit",
-    "coverage": "nyc --reporter=text mocha npm test"
+    "test": " NODE_ENV=testing nyc --reporter=text mocha --exit",
+    "coverage": ""
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^6.2.0",
     "expect": "^24.0.0",
     "express": "^4.16.4",
     "mocha": "^5.2.0",

@@ -105,13 +105,7 @@ describe('POST /v1/contacts', function() {
       .send(contact)
       .set('Content-Type', 'application/json')
       .expect('Content-Type', /json/)
-      .expect(400, function(err, res) {
-        if (err) { return done(err); }
-        expect(res.body.message).to.equal("Contact phone number or name can not be empty");
-
-        // Done
-        done();
-      });
+      .expect(400, done)
   });
 
 });
