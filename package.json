@@ -5,8 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development && nodemon",
-    "test": " NODE_ENV=testing mocha --exit",
-    "coverage": "nyc --reporter=text mocha",
+    "test": " NODE_ENV=testing nyc --reporter=text mocha --exit",
     "coveralls": "jest --coverage && cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js && rm -rf ./coverage"
   },
   "keywords": [],
