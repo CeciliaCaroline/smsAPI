@@ -15,10 +15,10 @@ exports.create = (req, res) => {
       message
         .save()
         .then(data => {
-          res.status(201).send(data);
+          return res.status(201).send(data);
         })
         .catch(err => {
-          res.status(500).send({
+          return res.status(500).send({
             message:
               err.message || "Some error occurred while creating the Message."
           });
@@ -32,14 +32,12 @@ exports.findAllSent = (req, res) => {
   
     .then(messages => {
       if (!messages.length) {
-        res.status = 404;
-        res.send({message: "No Messages have been found"})
+        return res.status(200).send({message: "No Messages have been found"})
       }
-      res.status = 200;
-      res.json(messages);
+      res.status(200).json(messages);
     })
     .catch(err => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving the Messages."
       });
@@ -52,14 +50,12 @@ exports.findAllReceived = (req, res) => {
   
     .then(messages => {
       if (!messages.length) {
-        res.status = 404;
-        res.send({message: "No Messages have been found"})
+        return res.status(200).send({message: "No Messages have been found"})
       }
-      res.status = 200;
-      res.json(messages);
+      return res.status(200).json(messages);
     })
     .catch(err => {
-      res.status(500).send({
+      return res.status(500).send({
         message:
           err.message || "Some error occurred while retrieving the Messages."
       });
@@ -74,8 +70,7 @@ exports.findOne = (req, res) => {
             message: `Message with id  ${req.params.messageID} not found`
           });
         }
-        res.status = 200;
-        res.json(message)
+        res.status(200).json(message)
     
           .catch(err => {
             if (err.kind === "ObjectId") {
@@ -83,7 +78,7 @@ exports.findOne = (req, res) => {
                 message: `Message with id  ${req.params.messageID} not found`
               });
             }
-            res.status(500).send({
+            return res.status(500).send({
               message:
                 err.message || "Some error occurred while retrieving the Message."
             });
@@ -108,7 +103,7 @@ exports.update = (req, res) => {
             message: `Message with id  ${req.params.messageID} not found`
           });
         }
-        res.json(message);
+        return res.json(message);
       })
       .catch(err => {
         if (err.kind === "ObjectId") {
@@ -116,7 +111,7 @@ exports.update = (req, res) => {
             message: "Mesage not found with id " + req.params.messageID
           });
         }
-        res.status(500).send({
+        return res.status(500).send({
           message:
             err.message || "Some error occurred while updating the Message."
         });
@@ -128,7 +123,7 @@ exports.delete = (req, res) => {
     Message.findByIdAndRemove(req.params.messageID)
 
     .then (() => {
-      res.json({
+      return res.json({
               message: "Deleted successfully"
             });
     })

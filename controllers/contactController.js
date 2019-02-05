@@ -13,17 +13,17 @@ exports.create = (req, res) => {
       contact
         .save()
         .then(data => {
-          res.status(201).send({data, message: "Contact successfully created"});
+          return res.status(201).send({data, message: "Contact successfully created"});
     
         })
         .catch(err => {
           if (err.code === 11000) {
-            res.status(400).send({
+            return res.status(400).send({
               message:
                 "The given phone number already exists."
             });
           }
-          res.status(500).json({
+          return res.status(500).json({
             message:
               err.message || "Some error occurred while creating the Contact."
           });
@@ -36,14 +36,12 @@ exports.findAll = (req, res) => {
     Contact.find()
     .then(contacts => {
       if (!contacts.length){
-        res.status(200).send({message: "No contacts have been found", status: "success"})
+        return res.status(200).send({message: "No contacts have been found", status: "success"})
       }
-      res.status = 200;
-      res.status(200).send({contacts, status: "success"});
+      return res.status(200).send({contacts, status: "success"});
     })
     .catch(error => {
-      res.status = 500;
-      res.status(500).send({
+      return res.status(500).send({
         message: error.message || "An error occurred while retrieving contacts."
       });
     });
@@ -66,7 +64,6 @@ exports.findOne = (req, res) => {
           message: `Contact with id  ${req.params.contactID} not found`
         });
       }
-      console.log(res, 'this is the response')
       return res.status(500).send({
         message: "Error retrieving contact with id " + req.params.contactID
     });
@@ -82,7 +79,7 @@ exports.delete = (req, res) => {
         Message.deleteMany({sender: req.params.contactID})
         // Message.updateMany({recipient: req.params.contactID},{ recipient: 'deleted user'})
         .then (() => {
-          res.json({
+          return res.json({
                   message: "Deleted successfully"
                 });
         })
