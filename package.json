@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "NODE_ENV=development && nodemon",
+    "start": "NODE_ENV=development && node index.js",
     "test": " NODE_ENV=testing nyc --reporter=text mocha --exit"
   },
   "keywords": [],
