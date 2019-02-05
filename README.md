@@ -1,5 +1,4 @@
 [![Build Status](https://travis-ci.org/CeciliaCaroline/smsAPI.svg?branch=master)](https://travis-ci.org/CeciliaCaroline/smsAPI)
-
 [![Coverage Status](https://coveralls.io/repos/github/CeciliaCaroline/smsAPI/badge.svg?branch=master)](https://coveralls.io/github/CeciliaCaroline/smsAPI?branch=master)
 
 ## SMS Management Application API
