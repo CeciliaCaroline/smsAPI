@@ -89,11 +89,14 @@ exports.findOne = (req, res) => {
 
 // Delete a contact with the specified contactId in the request
 exports.delete = (req, res) => {
-    Contact.findByIdAndRemove(req.params.contactID, (err, doc) => {
-        // delete all messages sent by contact
-        Message.deleteMany({sender: req.params.contactID})
+    Contact.findByIdAndRemove(req.params.contactID)
         // Message.updateMany({recipient: req.params.contactID},{ recipient: 'deleted user'})
-        .then (() => {
+        .then ((response) => {
+          if (!response) {
+            return res.status(404).send({
+              message: `Contact with id  ${req.params.contactID} not found`
+            });
+          }
           return res.json({
                   message: "Deleted successfully"
                 });
@@ -109,9 +112,12 @@ exports.delete = (req, res) => {
                   message: `Could not delete contact with id  ${req.params.contactID}`
                 });
         })
-        // update references to contact
-    
+       // delete all messages sent by contact
+
+        Message.deleteMany({sender: req.params.contactID})
+                // update references to contact
+
         Message.updateMany({recipient: req.params.contactID, recipient: 'deleted user'})
-      })
+      
 
 };

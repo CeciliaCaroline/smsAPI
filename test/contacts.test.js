@@ -60,6 +60,14 @@ describe('GET /contacts/:contactID', function () {
           });
   });
 
+  it('invalid URL', function (done) {
+    request(app)
+        .get(`/contacts/1`)
+        .set('Accept', 'application/json')
+        .expect('Content-Type', /json/)
+        .expect(404, done);
+});
+
 describe('POST /v1/contacts', function() {
 
   it('should respond with 201 created', function(done) {
@@ -105,18 +113,33 @@ describe('UPDATE /v1/contacts/:contactID', function () {
       .expect(200, done);
     })
   });
+});
 
 describe('DELETE /v1/contacts/:contactID', function () {
 
   it('respond with Deleted successfully', function (done) {
+    let contact = new Contact({
+      "phoneNumnber": 1234123,
+      "name": "Angel",
+    })
+    contact.save(err => {
       request(app)
-      .delete(`/v1/contacts/${contact.id}`)
+      .delete(`/v1/contacts/${contact._id}`)
       .set('Accept', 'application/json')
       .expect('Content-Type', /json/)
       .expect(200, done);
     })
   })
-  });
+
+    it('unsuccessful delete', function (done) {
+      request(app)
+      .delete(`/v1/contacts/t`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404, done);
+    })
+  })
+  
 
 // after(function(done) {
 //   mongoose.connect("mongodb://localhost:27017/testSmsManager");
