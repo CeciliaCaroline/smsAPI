@@ -87,15 +87,6 @@ describe('Message routes', function() {
       });
   });
 
-  it('respond with updates message', function (done) {
-   console.log(message, contact)
-      request(app)
-      .put(`/v1/contacts/${contact._id}/${message._id}`)
-      .set('Accept', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, done);
-
-  });
 
 });
 
