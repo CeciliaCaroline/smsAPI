@@ -22,32 +22,12 @@ beforeEach(function(done) {
   });
 });
 
-// afterEach(function(done) {
-//   mongoose.disconnect();
-//   done();
-// });
-
 
 const contact1 = {
   "phoneNumnber": 1234123,
   "name": "Angel",
 }
 
-describe('GET /contacts', function() {
-
-  it('should respond with a status as success', function(done) {
-    request(app)
-      .get('/v1/contacts')
-      .set('Content-Type', 'application/json')
-      .expect('Content-Type', /json/)
-      .expect(200, function(err, res) {
-        if (err) { return done(err); }
-        expect(res.body.status).to.equal("success");
-        done();
-      });
-  });
-
-});
 
 describe('GET /contacts/:contactID', function () {
 
@@ -110,6 +90,22 @@ describe('POST /v1/contacts', function() {
 
 });
 
+describe('UPDATE /v1/contacts/:contactID', function () {
+  it('respond with updates contact', function (done) {
+    let contact = new Contact({
+      "phoneNumnber": 1234123,
+      "name": "Angel",
+    })
+    contact.save(err => {
+      request(app)
+      .put(`/v1/contacts/${contact.id}`)
+      .send({"name": "penny"})
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+    })
+  });
+
 describe('DELETE /v1/contacts/:contactID', function () {
 
   it('respond with Deleted successfully', function (done) {
@@ -119,6 +115,7 @@ describe('DELETE /v1/contacts/:contactID', function () {
       .expect('Content-Type', /json/)
       .expect(200, done);
     })
+  })
   });
 
 // after(function(done) {

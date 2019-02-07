@@ -5,8 +5,7 @@ const router = express.Router();
 const contacts = require("./controllers/contactController");
 const message = require("./controllers/messageController");
 
-//GET contacts
-router.get("/contacts", contacts.findAll)
+
 
 // POST contact
 router.post("/contacts", contacts.create);
@@ -16,6 +15,9 @@ router.get("/contacts/:contactID", contacts.findOne)
 
 // DELETE contact
 router.delete("/contacts/:contactID", contacts.delete);
+
+//UPDATE contacts
+router.put("/contacts/:contactID", contacts.update)
 
 
 // POST message

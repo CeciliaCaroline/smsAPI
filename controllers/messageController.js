@@ -5,7 +5,7 @@ const Message = require("../models/message").Message;
 exports.create = (req, res) => {
     if (!req.body.text || !req.body.recipient) {
         return res.status(400).send({
-          message: "Message text/sender.recipient can not be empty"
+          message: "Message text/recipient can not be empty"
         });
       }
       if (req.params.contactID){

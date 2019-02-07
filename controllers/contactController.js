@@ -31,18 +31,33 @@ exports.create = (req, res) => {
 
 };
 
-// Retrieve and return all contacts from the database.
-exports.findAll = (req, res) => {
-    Contact.find()
-    .then(contacts => {
-      if (!contacts.length){
-        return res.status(200).send({message: "No contacts have been found", status: "success"})
+// Update a contact identified by the contactId in the request
+exports.update = (req, res) => {
+  Contact.findByIdAndUpdate(
+      req.params.contactID,
+      {
+        name: req.body.name 
+      },
+      { new: true }
+    )
+  
+    .then(contact => {
+      if (!contact) {
+        return res.status(404).send({
+          message: `Contact with id  ${req.params.contactID} not found`
+        });
       }
-      return res.status(200).send({contacts, status: "success"});
+      return res.json(contact);
     })
-    .catch(error => {
+    .catch(err => {
+      if (err.kind === "ObjectId") {
+        return res.status(404).send({
+          message: "Contact not found with id " + req.params.contactID
+        });
+      }
       return res.status(500).send({
-        message: error.message || "An error occurred while retrieving contacts."
+        message:
+          err.message || "Some error occurred while updating theContact."
       });
     });
 };
