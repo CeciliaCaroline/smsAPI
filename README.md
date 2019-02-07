@@ -36,5 +36,19 @@ You can run the application tests in the terminal with:
 
 ### Endpoints
 
+Endpoint | Functionality
+------------ | -------------
+POST /v1/contacts |Create a new contact
+GET /v1/contacts/:contactID | Get contact
+UPDATE /v1/contacts/:contactID | Update contact name
+DELETE /v1/contacts/:contactID  | Delete contact
+POST /v1/contacts/:contactID/messages  | Create/send message
+GET /v1/contacts/:contactID/messages/sent | Get sent messages
+GET /v1/contacts/:contactID/messages/:messageID | Get specific messages
+GET /v1/contacts/:contactID/messages/received | Get received messages
+PUT /v1/contacts/:contactID/messages/:messageID | Updates message status
+DELETE /v1/contacts/:contactID/messages/:messageID | Deletes message
+
+More detailed documentation of the API can be found [here](https://documenter.getpostman.com/view/2437198/RztppSwD)
 
 
