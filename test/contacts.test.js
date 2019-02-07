@@ -12,14 +12,15 @@ beforeEach(function(done) {
   mongoose.connect('mongodb://localhost:27017/testSmsManager');
   mongoose.connection.once('connected', () => {
     mongoose.connection.db.dropDatabase();
-    contact = new Contact({
-      "phoneNumnber": 1234123,
-      "name": "Angel",
-    })
-    contact.save()
-
-    done();
+    
   });
+  contact = new Contact({
+    "phoneNumnber": 1234123,
+    "name": "Angel",
+  })
+  contact.save()
+
+  done();
 });
 
 

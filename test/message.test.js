@@ -17,19 +17,20 @@ beforeEach(function(done) {
   mongoose.connect('mongodb://localhost:27017/testSmsManager');
   mongoose.connection.once('connected', () => {
     mongoose.connection.db.dropDatabase();
-    contact = new Contact({
-      "phoneNumnber": 1234123,
-      "name": "Angel",
-    })
-    contact.save()
-
-    message = new Message({
-        "text": "Message number 5",
-        "recipient": "5c55e05215553abacfa3faff"
-      })
-      message.save()
-    done();
+  
   });
+  contact = new Contact({
+    "phoneNumnber": 1234123,
+    "name": "Angel",
+  })
+  contact.save()
+
+  message = new Message({
+      "text": "Message number 5",
+      "recipient": "5c55e05215553abacfa3faff"
+    })
+    message.save()
+  done();
 });
 
 
@@ -59,6 +60,19 @@ describe('Message routes', function() {
       });
   });
 
+  it('should respond with not found', function(done) {
+    request(app)
+      .get(`/v1/contacts/${contact._id}/messages/1`)
+      .set('Content-Type', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(404, function(err, res) {
+        if (err) { return done(err); }
+          expect(res.body.message).to.equal("Message with id  1 not found");
+          // done
+          done();
+      });
+  });
+
     it('should respond with 201 created', function(done) {
     request(app)
       .post(`/v1/contacts/${contact.id}/messages`)
@@ -71,6 +85,16 @@ describe('Message routes', function() {
         // Done
         done();
       });
+  });
+
+  it('respond with updates message', function (done) {
+   console.log(message, contact)
+      request(app)
+      .put(`/v1/contacts/${contact._id}/${message._id}`)
+      .set('Accept', 'application/json')
+      .expect('Content-Type', /json/)
+      .expect(200, done);
+
   });
 
 });
