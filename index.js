@@ -12,7 +12,7 @@ const mongoose = require("mongoose");
 require('dotenv').config()
 
 mongoose.Promise = global.Promise;
-let port =  8081 || process.env.PORT;
+let port = process.env.PORT || 8081;
 app.use(logger("dev"));
 app.use(jsonParser());
 app.use(cors())
