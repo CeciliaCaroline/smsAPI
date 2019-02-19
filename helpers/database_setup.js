@@ -1,14 +1,16 @@
 'use strict';
 const mongoose = require("mongoose");
-const dbConfig = require("../database.config");
+require('dotenv').config()
+
+// const dbConfig = require("../database.config");
 
 mongoose.Promise = global.Promise;
 
 module.exports.databaseSetUp = () => {
-let DATABASE_URL = dbConfig.url;
+let DATABASE_URL = process.env.MONGODB_URI;
 
 if (process.env.NODE_ENV === "testing") {
-  DATABASE_URL = dbConfig.testUrl;
+  DATABASE_URL = process.env.TEST_DATABASE_URI;
 }
 
 // Connecting to the database
